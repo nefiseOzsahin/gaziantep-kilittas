@@ -25,13 +25,48 @@
     <link rel="stylesheet" href="assets/css/nice-select.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <style>
-      #gallery {
-        display: flex;
+      /* Slider Container */
+      .slider-container {
+        position: relative;
+        width: 90%; /* Slider genişliğini ayarlayabilirsiniz */
+        margin: auto; /* Ortada görünmesi için */
+        overflow: hidden; /* Taşan görselleri gizler */
       }
-      #gallery img {
-        max-width: 500px;
-        margin: 10px;
-        display: block;
+
+      /* Slider İçindeki Görseller */
+      #slider {
+        display: flex;
+        transition: transform 0.5s ease; /* Kaydırma animasyonu */
+      }
+
+      #slider img {
+        max-width: 100%; /* Görselin genişliği ekran genişliğine uyumlu olacak */
+        max-height: 400px; /* Görsel yüksekliğini sınırla */
+        object-fit: cover; /* Görsellerin oranlarını bozmadan kesilmesini sağlar */
+        margin-right: 10px; /* Resimler arasındaki boşluk */
+      }
+
+      /* Prev ve Next Butonları */
+      .prev,
+      .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 5px;
+
+        color: orange;
+        border: none;
+        padding: 5px 20px;
+        cursor: pointer;
+        z-index: 100;
+      }
+
+      .prev {
+        left: 10px;
+      }
+
+      .next {
+        right: 10px;
       }
       .big-logo {
         display: block;
@@ -421,7 +456,11 @@
             </div>
           </div>
           <div class="row">
-            <div id="gallery"></div>
+            <div class="slider-container">
+              <button class="prev"><</button>
+              <div id="slider"></div>
+              <button class="next">></button>
+            </div>
             <div class="col-12">
               <!-- Nav Card -->
               <div class="tab-content active" id="nav-tabContent">
@@ -762,20 +801,59 @@
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
     <script>
-      fetch("image-urls.json")
-        .then((res) => res.json())
-        .then((imageUrls) => {
-          const gallery = document.getElementById("gallery");
+      window.addEventListener("DOMContentLoaded", function () {
+        const slider = document.getElementById("slider");
+        const prevButton = document.querySelector(".prev");
+        const nextButton = document.querySelector(".next");
 
-          imageUrls.forEach((url) => {
-            const img = document.createElement("img");
-            img.src = url;
-            gallery.appendChild(img);
+        fetch("image-urls.json") // JSON dosyasının yolu
+          .then((response) => response.json())
+          .then((data) => {
+            // Slider'ı temizle
+            slider.innerHTML = "";
+
+            // JSON verisini döngü ile işleyerek görselleri ekle
+            data.forEach((imageUrl) => {
+              const imgElement = document.createElement("img");
+              imgElement.src = imageUrl;
+              slider.appendChild(imgElement);
+            });
+
+            // Slider'ı güncelleme
+            let currentIndex = 0;
+
+            const updateSliderPosition = () => {
+              const images = slider.getElementsByTagName("img");
+              const totalImages = images.length;
+
+              if (totalImages > 0) {
+                if (currentIndex < 0) currentIndex = totalImages - 1;
+                if (currentIndex >= totalImages) currentIndex = 0;
+
+                const offset = -(currentIndex * images[0].offsetWidth + 10); // +10 margin-right
+                slider.style.transform = `translateX(${offset}px)`;
+              }
+            };
+
+            // Next butonuna tıklandığında
+            nextButton.addEventListener("click", () => {
+              currentIndex++;
+              updateSliderPosition();
+            });
+
+            // Prev butonuna tıklandığında
+            prevButton.addEventListener("click", () => {
+              currentIndex--;
+              updateSliderPosition();
+            });
+
+            // İlk pozisyonu ayarla
+            updateSliderPosition();
+          })
+          .catch((error) => {
+            console.error("Görseller yüklenemedi:", error);
           });
-        })
-        .catch((err) => {
-          console.error("Görseller alınamadı:", err);
-        });
+      });
     </script>
   </body>
 </html>
