@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Gaziantep Kilittaş | İletişim</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png" />
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="assets/css/gijgo.css" />
+    <link rel="stylesheet" href="assets/css/slicknav.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="assets/css/slick.css" />
+    <link rel="stylesheet" href="assets/css/nice-select.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <style>
+       
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        .form-container input:focus,
+        .form-container textarea:focus {
+            border-color: #ff5f13;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.2);
+        }
+
+        .form-container textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-container input.button {
+            background-color: #ff5f13;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .form-container input.button:hover {
+            background-color: #ff5f13;
+            transform: translateY(-2px);
+        }
+
+        .form-container input.button:active {
+            transform: translateY(0);
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 60vh; /* ekran yüksekliğinin %60’ı */
+      }
+      .hero-overly::before {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="preloader-active">
+      <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+          <div class="preloader-circle"></div>
+          <div class="preloader-img pere-text">
+            <img src="assets/img/logo/logo-kilittas-gaziantep.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <header>
+      <!-- Header Start -->
+      <div class="header-area header-transparent">
+        <div class="main-header">
+          <div class="header-top d-none d-lg-block">
+            <div class="container-fluid">
+              <div class="col-xl-12">
+                <div
+                  class="row d-flex justify-content-between align-items-center"
+                >
+                  <div class="header-info-left"></div>
+                  <div class="header-info-right">
+                    <ul class="header-social">
+                      <li>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="header-bottom header-sticky">
+            <div class="container-fluid">
+              <div class="row align-items-center">
+                <!-- Logo -->
+                <div class="col-xl-2 col-lg-2 col-md-1">
+                  <div class="logo">
+                    <!-- logo-1 -->
+                    <a href="index.html" class="big-logo"
+                      ><img
+                        src="assets/img/logo/logo-kilittas-gaziantep.jpg"
+                        alt=""
+                    /></a>
+                    <!-- logo-2 -->
+                    <a href="index.html" class="small-logo"
+                      ><img
+                        src="assets/img/logo/logo-kilittas-gaziantep.jpg"
+                        alt=""
+                    /></a>
+                  </div>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-8">
+                  <!-- Main-menu -->
+                  <div class="main-menu f-right d-none d-lg-block">
+                    <nav>
+                      <ul id="navigation">
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="about.html">Hakkımızda</a></li>
+
+                        <li><a href="services.html">Servisler</a></li>
+                        <li>
+                          <a href="blog.html">Blog</a>
+                          <ul class="submenu">
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="single-blog.html">Blog Detay </a></li>
+                            <li>
+                              <a href="sectorel-improvements.html"
+                                >Blog Detay
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+
+                        <li><a href="contact.html">İletişim</a></li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-3">
+                  <div class="header-right-btn f-right d-none d-lg-block">
+                    <a href="contact.html#contactForm" class="btn"
+                      >Mesaj Gönder</a
+                    >
+                  </div>
+                </div>
+                <!-- Mobile Menu -->
+                <div class="col-12">
+                  <div class="mobile_menu d-block d-lg-none"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Header End -->
+    </header>
+    <!-- slider Area Start-->
+    <div class="slider-area">
+      <div
+        class="single-slider hero-overly slider-height2 d-flex align-items-center"
+        data-background="assets/img/hero/contact.png"
+        style="width: 100%; background-size: cover"
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="hero-cap pt-100">
+                <h2>İletişim</h2>
+                <nav aria-label="breadcrumb ">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="index.html">Anasayfa</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">İletişim</a></li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- slider Area End-->
+    <!-- ================ contact section start ================= -->
+    
+    <div class="form-container">
+    <h2>İletişim Formu</h2>
+    <form action="send.php" method="POST">
+        <div class="form-group">
+            <label for="name">Adınız</label>
+            <input type="text" id="name" name="name" placeholder="Adınız ve soyadınız" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email Adresiniz</label>
+            <input type="email" id="email" name="email" placeholder="ornek@email.com" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="message">Mesajınız</label>
+            <textarea id="message" name="message" placeholder="Mesajınızı buraya yazın..." required></textarea>
+        </div>
+        
+        <input type="submit" class="button" value="Gönder">
+    </form>
+
+    <div id="status-message" class="message">
+        <!-- Mesaj durumu buraya gelecek -->
+    </div>
+</div>
+
+    <!-- ================ contact section end ================= -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+      fetch("footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+    <!-- JS here -->
+
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./assets/js/owl.carousel.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <!-- Date Picker -->
+    <script src="./assets/js/gijgo.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/animated.headline.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./assets/js/jquery.scrollUp.min.js"></script>
+    <script src="./assets/js/jquery.nice-select.min.js"></script>
+    <script src="./assets/js/jquery.sticky.js"></script>
+    <script src="./assets/js/jquery.magnific-popup.js"></script>
+
+    <!-- contact js -->
+    <script src="./assets/js/contact.js"></script>
+    <script src="./assets/js/jquery.form.js"></script>
+    <script src="./assets/js/jquery.validate.min.js"></script>
+    <script src="./assets/js/mail-script.js"></script>
+    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      // Harita nesnesini başlat
+      var map = L.map("map").setView([37.0662, 37.3833], 13); // Gaziantep Üniversitesi koordinatları
+
+      // Harita katmanını ekle (OpenStreetMap)
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // İşaretçi ekle
+      L.marker([37.0662, 37.3833])
+        .addTo(map)
+        .bindPopup("Gaziantep Üniversitesi")
+        .openPopup();
+    </script>
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+    const messageDiv = document.getElementById("status-message");
+
+    if (status === "success") {
+        messageDiv.textContent = "Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.";
+        messageDiv.className = "message success";
+    } else if (status === "error") {
+        messageDiv.textContent = "Mesaj gönderilemedi. Lütfen bilgilerinizi kontrol edip tekrar deneyin.";
+        messageDiv.className = "message error";
+    }
+    
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const email = document.getElementById('email').value;
+        if (!email.includes('@') || !email.includes('.')) {
+            e.preventDefault();
+            messageDiv.textContent = "Lütfen geçerli bir email adresi girin.";
+            messageDiv.className = "message error";
+        }
+    });
+  });
+</script>
+
+  </body>
+</html>
