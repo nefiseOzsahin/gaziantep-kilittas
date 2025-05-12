@@ -25,6 +25,14 @@
     <link rel="stylesheet" href="assets/css/nice-select.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <style>
+      #gallery {
+        display: flex;
+      }
+      #gallery img {
+        max-width: 500px;
+        margin: 10px;
+        display: block;
+      }
       .big-logo {
         display: block;
       }
@@ -413,6 +421,7 @@
             </div>
           </div>
           <div class="row">
+            <div id="gallery"></div>
             <div class="col-12">
               <!-- Nav Card -->
               <div class="tab-content active" id="nav-tabContent">
@@ -427,9 +436,7 @@
                     <div class="row">
                       <div class="col-lg-12 col-md-12">
                         <div class="single-project mb-30">
-                          <div class="project-img">
-                            <img src="assets/img/gallery/fabrika2.jpg" alt="" />
-                          </div>
+                          <div class="project-img"></div>
                           <div class="project-cap">
                             <a href="#" class="plus-btn"></a>
                             <h4>
@@ -703,6 +710,7 @@
       </div>
       <!-- Testimonial End -->
     </main>
+
     <div id="footer-placeholder"></div>
 
     <script>
@@ -753,5 +761,21 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
+    <script>
+      fetch("image-urls.json")
+        .then((res) => res.json())
+        .then((imageUrls) => {
+          const gallery = document.getElementById("gallery");
+
+          imageUrls.forEach((url) => {
+            const img = document.createElement("img");
+            img.src = url;
+            gallery.appendChild(img);
+          });
+        })
+        .catch((err) => {
+          console.error("Görseller alınamadı:", err);
+        });
+    </script>
   </body>
 </html>

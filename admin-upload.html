@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Image Upload</title>
+    <script
+      src="https://upload-widget.cloudinary.com/global/all.js"
+      type="text/javascript"
+    ></script>
+  </head>
+  <body>
+    <h1>Upload Image to Gallery</h1>
+    <button id="upload_widget">Upload Image</button>
+
+    <div id="uploadedImages"></div>
+
+    <script>
+      const cloudName = "diaavuqa1"; // kendi Cloudinary hesabın
+      const uploadPreset = "unsigned_upload"; // oluşturduğun upload preset
+
+      const myWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: cloudName,
+          uploadPreset: uploadPreset,
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            const uploadedUrl = result.info.secure_url;
+            console.log("Image uploaded:", uploadedUrl);
+
+            // Sayfaya görseli ekleyelim
+            const img = document.createElement("img");
+            img.src = uploadedUrl;
+            img.style.maxWidth = "300px";
+            document.getElementById("uploadedImages").appendChild(img);
+
+            // 🔽 URL'yi PHP dosyasına gönder (örneğin bir JSON dosyasına ekleyecek)
+            fetch("update-json.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ url: uploadedUrl }),
+            })
+              .then(() => alert("Görsel başarıyla eklendi!"))
+              .catch((err) => console.error("Güncelleme hatası:", err));
+          }
+        }
+      );
+
+      document.getElementById("upload_widget").addEventListener(
+        "click",
+        function () {
+          myWidget.open();
+        },
+        false
+      );
+    </script>
+  </body>
+</html>
