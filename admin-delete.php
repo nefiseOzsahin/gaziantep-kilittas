@@ -1,44 +1,45 @@
 <?php
-require 'vendor/autoload.php';
-
-\Cloudinary\Configuration\Configuration::instance([
-    'cloud' => [
-        'cloud_name' => 'diaavuqa1',
-        'api_key'    => '557345822633746',
-        'api_secret' => 'x6WPjTdJOdBHOv-9eIyp-eDSZXs',
-    ],
-]);
-
-use Cloudinary\Api\Admin\AdminApi;
-
-$api = new AdminApi();
-
-// Sadece belirli bir klasörü (örneğin: "gallery") al
-$resources = $api->resources([
-    'type' => 'upload',
-    'prefix' => 'gallery/'
-]);
-
-$images = $resources['resources'];
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Delete Images</title>
+  <title>Admin - Görselleri Sil</title>
 </head>
 <body>
-  <h1>Uploaded Images</h1>
-  <?php foreach ($images as $image): ?>
-    <div style="margin-bottom:20px">
-      <img src="<?= $image['secure_url'] ?>" style="max-width:200px"><br>
-      <form method="post" action="delete-image.php">
-        <input type="hidden" name="public_id" value="<?= $image['public_id'] ?>">
-        <input type="hidden" name="secure_url" value="<?= $image['secure_url'] ?>">
-        <button type="submit">Sil</button>
-      </form>
-    </div>
-  <?php endforeach; ?>
+  <h1>Yüklenen Görseller</h1>
+  <?php
+    $jsonFile ="image-urls.json";
+
+    if (!file_exists($jsonFile)) {
+        echo "<p><strong>image-urls.json bulunamadı.</strong></p>";
+        exit;
+    }
+
+    $urls = json_decode(file_get_contents($jsonFile), true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo "<p><strong>JSON okunamadı:</strong> " . json_last_error_msg() . "</p>";
+        exit;
+    }
+
+    if (empty($urls)) {
+        echo "<p>Henüz görsel yok.</p>";
+    } else {
+        foreach ($urls as $url) {
+            echo '<div style="margin-bottom:20px">';
+            echo '<img src="' . $url . '" style="max-width:200px"><br>';
+            echo '<form method="post" action="delete-image.php">';
+            echo '<input type="hidden" name="url" value="' . $url . '">';
+            echo '<button type="submit">Sil</button>';
+            echo '</form>';
+            echo '</div>';
+        }
+    }
+  ?>
 </body>
 </html>

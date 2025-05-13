@@ -1,31 +1,30 @@
 <?php
-require 'vendor/autoload.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-\Cloudinary\Configuration\Configuration::instance([
-    'cloud' => [
-        'cloud_name' => 'diaavuqa1',
-        'api_key'    => '557345822633746',
-        'api_secret' => 'x6WPjTdJOdBHOv-9eIyp-eDSZXs',
-    ],
-]);
+$jsonFile = "image-urls.json";
 
-use Cloudinary\Api\Upload\UploadApi;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
+    $urlToDelete = $_POST['url'];
 
-$publicId = $_POST['public_id'];
-$secureUrl = $_POST['secure_url'];
+    if (!file_exists($jsonFile)) {
+        die("JSON dosyası bulunamadı.");
+    }
 
-// 1. Cloudinary'den sil
-$api = new UploadApi();
-$api->destroy($publicId);
+    $urls = json_decode(file_get_contents($jsonFile), true);
 
-// 2. img-urls.json'dan kaldır
-$jsonPath = 'img-urls.json';
-$urls = json_decode(file_get_contents($jsonPath), true);
-$updated = array_filter($urls, function($url) use ($secureUrl) {
-    return $url !== $secureUrl;
-});
-file_put_contents($jsonPath, json_encode(array_values($updated), JSON_PRETTY_PRINT));
+    if (($key = array_search($urlToDelete, $urls)) !== false) {
+        unset($urls[$key]);
+        $urls = array_values($urls); // indexleri sıfırla
 
-// 3. Geri yönlendir
-header('Location: admin-delete.php');
-exit;
+        file_put_contents($jsonFile, json_encode($urls, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        echo "Görsel başarıyla silindi.<br>";
+    } else {
+        echo "URL bulunamadı.<br>";
+    }
+
+    echo '<a href="admin-delete.php">Geri dön</a>';
+} else {
+    echo "Geçersiz istek.";
+}
